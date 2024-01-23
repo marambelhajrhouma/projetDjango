@@ -1,0 +1,17 @@
+{% for employee in employees %}
+    <tr data-position="{{ employee.position.position_name }}">
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.position.get_position_name_display }}</td>
+        <td>{{ employee.department.department_name }}</td>
+        <td>{{ employee.email }}</td>
+        <td>{{ employee.phone_number }}</td>
+        <td>
+            {% if employee.employee_id %}
+                <a href="{% url 'deleteEmployee' employee.employee_id %}">Delete</a>
+                <a href="{% url 'updateEmployee' employee.employee_id %}">Update</a>
+            {% else %}
+                N/A
+            {% endif %}
+        </td>
+    </tr>
+{% endfor %}

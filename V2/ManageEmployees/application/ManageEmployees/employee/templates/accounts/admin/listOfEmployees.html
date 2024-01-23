@@ -1,0 +1,65 @@
+{% extends 'accounts/base_generic.html' %}
+{% block content %}
+
+<h2>Admin Dashboard</h2>
+
+<div>
+    <button onclick="filterEmployees('RH')">Show RH Employees</button>
+    <button onclick="filterEmployees('Regular Employee')">Show Regular Employees</button>
+    <button onclick="resetFilter()">Show All</button>
+</div>
+
+<div>
+    <label for="departmentFilter">Filter by Department:</label>
+    <select id="departmentFilter" onchange="filterByDepartment(this.value)">
+        <option value="All">All Departments</option>
+        <option value="Administration">Administration</option>
+        <option value="Information Technology">Information Technology</option>
+        <option value="Human Resources">Human Resources</option>
+        <option value="Finance">Finance</option>
+        <!-- Add other department options as needed -->
+    </select>
+</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Department</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% include './employee_table_body.html' %}
+    </tbody>
+</table>
+
+<script>function filterEmployees(position) {
+    const rows = document.querySelectorAll('tbody tr');
+
+    rows.forEach(row => {
+        const rowPosition = row.getAttribute('data-position').toLowerCase().replace('_', ' ');
+        const filterPosition = position.toLowerCase();
+
+        console.log(`Row Position: ${rowPosition}, Filter Position: ${filterPosition}`);
+
+        if (rowPosition === filterPosition || filterPosition === 'all') {
+            row.style.display = 'table-row';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+}
+    function resetFilter() {
+        const rows = document.querySelectorAll('tbody tr');
+
+        rows.forEach(row => {
+            row.style.display = 'table-row';
+        });
+    }
+</script>
+
+{% endblock %}
